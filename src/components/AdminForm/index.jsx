@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { sendEditData } from "../../services/";
+import { sendEditData, createDataUser } from "../../services/";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 
 const Form = ({ edit, data }) => {
-  const [userData, setUserData] = useState({ ...{} });
+  const [userData, setUserData] = useState({ ...{ isAdmin: false } });
   const history = useHistory();
 
   const getEditData = async () => {
@@ -20,9 +20,9 @@ const Form = ({ edit, data }) => {
     e.preventDefault();
     if (Object.keys(userData).length > 0) {
       const newData = getEditData();
+      console.log(newData);
       if (!newData.error) {
-        console.log(newData);
-        alert(newData.info);
+        alert("Usuário editado com sucesso!");
         history.push("/admin");
       }
     } else {
@@ -30,24 +30,36 @@ const Form = ({ edit, data }) => {
     }
   };
 
+  const createUser = async (e) => {
+    e.preventDefault();
+    console.log(userData);
+    if (Object.keys(userData).length === 7) {
+      const data = await createDataUser(userData);
+      if (Object.keys(data) > 10) {
+        alert("Usuário criado com sucesso");
+      } else {
+        alert(data.info);
+      }
+    }
+  };
+
   return (
     <section className='admin--form'>
-      <p>
-        <Link to={"/admin"}>Retornar ao Admin</Link>
+      <p style={{ marginLeft: "15px" }}>
+        <Link to={"/admin"} style={{ textDecoration: "none" }}>
+          👈 Voltar
+        </Link>
       </p>
       <form
-        onSubmit={edit ? editUserData : null}
+        onSubmit={edit ? editUserData : createUser}
         style={{ display: "flex", flexDirection: "column" }}
       >
         <fieldset>
-          <label htmlFor=''>Username:</label>
+          <label htmlFor='nickname'>Nickname do usuário:</label>
           <input
             type='text'
-            placeholder={
-              !edit.toString() === "true"
-                ? "Digite o seu username"
-                : data.username
-            }
+            id='nickname'
+            placeholder={!edit ? "Digite o seu username" : data.username}
             value={userData.username}
             onChange={(e) =>
               setUserData((oldData) => ({
@@ -55,16 +67,31 @@ const Form = ({ edit, data }) => {
                 ...{ username: e.target.value },
               }))
             }
+            checked={false}
           />
         </fieldset>
         <fieldset>
-          <label htmlFor=''>Password:</label>
+          <label htmlFor='name'>Nome do usuário:</label>
+          <input
+            type='text'
+            id='name'
+            placeholder={!edit ? "Digite o seu username" : data.name}
+            value={userData.name}
+            onChange={(e) =>
+              setUserData((oldData) => ({
+                ...oldData,
+                ...{ name: e.target.value },
+              }))
+            }
+            checked={false}
+          />
+        </fieldset>
+        <fieldset>
+          <label htmlFor=''>Senha do usuário:</label>
           <input
             type='password'
             placeholder={
-              !edit.toString() === "true"
-                ? "Digite uma senha"
-                : "************************"
+              !edit ? "Digite uma senha" : "************************"
             }
             onChange={(e) =>
               setUserData((oldData) => ({
@@ -75,12 +102,10 @@ const Form = ({ edit, data }) => {
           />
         </fieldset>
         <fieldset>
-          <label htmlFor=''>E-mail:</label>
+          <label htmlFor=''>E-mail do usuário:</label>
           <input
             type='email'
-            placeholder={
-              !edit.toString() === "true" ? "Digite seu email" : data.email
-            }
+            placeholder={!edit ? "Digite seu email" : data.email}
             onChange={(e) =>
               setUserData((oldData) => ({
                 ...oldData,
@@ -93,11 +118,8 @@ const Form = ({ edit, data }) => {
           <label htmlFor=''>Telefone:</label>
           <input
             type='text'
-            placeholder={
-              !edit.toString() === "true"
-                ? "Digite seu telefone"
-                : data.telephone
-            }
+            placeholder={!edit ? "Digite seu telefone" : data.telephone}
+            maxLength='9'
             onChange={(e) =>
               setUserData((oldData) => ({
                 ...oldData,
@@ -110,9 +132,8 @@ const Form = ({ edit, data }) => {
           <label htmlFor=''>CPF:</label>
           <input
             type='text'
-            placeholder={
-              !edit.toString() === "true" ? "Digite seu CPF" : data.cpf
-            }
+            maxLength='12'
+            placeholder={!edit ? "Digite seu CPF" : data.cpf}
             onChange={(e) =>
               setUserData((oldData) => ({
                 ...oldData,
@@ -126,11 +147,10 @@ const Form = ({ edit, data }) => {
           <input
             type='checkbox'
             id='is-admin'
-            placeholder={data.isAdmin}
             onChange={(e) =>
               setUserData((oldData) => ({
                 ...oldData,
-                ...{ isAdmin: data.isAdmin || e.target.checked },
+                ...{ isAdmin: e.target.checked },
               }))
             }
           />

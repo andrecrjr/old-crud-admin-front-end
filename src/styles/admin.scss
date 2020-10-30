@@ -11,6 +11,13 @@
       margin-bottom: 10px;
     }
     &__form {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      width: 100%;
+      input {
+        width: 100%;
+      }
     }
   }
   &--container {

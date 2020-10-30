@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-
+import { Link } from "react-router-dom";
+import { removeUserData } from "../../services";
 export const UserTable = () => {
   const [users, setUsers] = useState();
   const [errors, setError] = useState();
@@ -18,19 +19,30 @@ export const UserTable = () => {
     console.log(data);
     history.push("/admin/edit", data);
   };
+  const removeUser = (e, username) => {
+    e.preventDefault();
+    removeUserData(username);
+  };
   useEffect(() => {
     fetchUsers();
   }, []);
   return (
     <section className='admin--container'>
       <section className='admin--container__menu'>
-        <button className='button--main blue'>Cadastrar usuario</button>
+        <button className='button--main blue'>
+          <Link
+            style={{ textDecoration: "none", color: "white" }}
+            to='/admin/create'
+          >
+            Cadastrar usuario
+          </Link>
+        </button>
       </section>
       <div className='table--container' style={{ overflowX: "auto" }}>
         <table className='table--users'>
           <thead>
             <tr>
-              <td>Nome Usuário</td>
+              <td>Nickname</td>
               <td>E-mail</td>
               <td>Nome do Usuário</td>
               <td>Telefone</td>
@@ -47,14 +59,12 @@ export const UserTable = () => {
                   <tr key={user._id}>
                     <td>{user.username}</td>
                     <td>{user.email}</td>
-                    <td>
-                      {user.firstName} {user.lastName}
-                    </td>
+                    <td>{user.name}</td>
                     <td>{user.telephone}</td>
                     <td>{user.cpf}</td>
                     <td>{user.isAdmin ? `Sim` : `Não`}</td>
                     <td onClick={(e) => goToEdit(e, { ...user })}>✏</td>
-                    <td>✖</td>
+                    <td onClick={(e) => removeUser(e, user.username)}>✖</td>
                   </tr>
                 </>
               ))}

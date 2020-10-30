@@ -1,8 +1,10 @@
 input:not([type="checkbox"]) {
-  width: 80%;
+  width: auto;
   height: 25px;
   padding: 5px 0 5px 15px;
   margin-top: 15px;
+  border-radius: 5px;
+  border: 1px solid black;
 }
 
 fieldset {
