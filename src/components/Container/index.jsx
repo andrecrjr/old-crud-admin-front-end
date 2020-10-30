@@ -1,14 +1,22 @@
 import React from "react";
+import { useHistory } from "react-router";
 
 const Layout = ({ isAuth, children }) => {
   const [data, setData] = React.useState(
     localStorage.getItem("admin-user") || null
   );
 
+  const history = useHistory();
+
   React.useEffect(() => {
-    setData(isAuth.auth || false);
-    console.log(data);
+    if (isAuth) setData(isAuth.auth || false);
   }, [isAuth]);
+
+  React.useEffect(() => {
+    if (!data && history.location.pathname !== "/") {
+      history.push("/admin");
+    }
+  }, [data, history]);
 
   const logout = (e) => {
     e.preventDefault();
@@ -20,7 +28,11 @@ const Layout = ({ isAuth, children }) => {
   return (
     <>
       <header className='header'>
-        <div>Administração CRUD Mongo</div>
+        {history.location.pathname.includes("/admin") ? (
+          <div>Administração CRUD Mongo</div>
+        ) : (
+          <p>Autenticação do Usuário</p>
+        )}
         {data && <div onClick={logout}>Logout</div>}
       </header>
       <section>{children}</section>

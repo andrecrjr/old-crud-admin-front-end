@@ -2,17 +2,23 @@ import React, { useState } from "react";
 import { UserTable } from "./UserTable";
 import { authUser } from "../../services";
 import Layout from "../../components/Container";
+import { useHistory } from "react-router-dom";
 
 const Admin = () => {
   const [inputs, setInput] = useState({ username: "", password: "" });
   const [userAuth, setAuth] = useState(
     JSON.parse(localStorage.getItem("admin-user")) || false
   );
+  const history = useHistory();
 
-  const _sendAuth = (e) => {
+  const sendAuth = async (e) => {
     e.preventDefault();
     console.log();
-    authUser(true, inputs, setAuth);
+    const data = authUser(true, inputs, setAuth);
+    const response = await data;
+    if (response.user) {
+      history.push("/");
+    }
   };
 
   return (
@@ -21,7 +27,7 @@ const Admin = () => {
         {!userAuth && (
           <section className='admin--login'>
             <h1>Login do Admin</h1>
-            <form className='admin--login__form' onSubmit={_sendAuth}>
+            <form className='admin--login__form' onSubmit={sendAuth}>
               <input
                 type='text'
                 value={inputs.username}

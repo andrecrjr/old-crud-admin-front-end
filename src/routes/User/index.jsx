@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Layout from "../../components/Container";
 import { authUser } from "../../services";
+import { useLocation } from "react-router";
 const UserLogin = () => {
   const [inputs, setInputs] = useState({ username: "", password: "" });
   const [auth, setAuth] = useState({});
+
   const sendAuthUser = async (e) => {
     e.preventDefault();
     await authUser(false, inputs, setAuth);
@@ -51,7 +53,7 @@ const UserLogin = () => {
           </section>
         </section>
       ) : (
-        <section>Bem vindo usuáario</section>
+        <UserInformations />
       )}
     </Layout>
   );

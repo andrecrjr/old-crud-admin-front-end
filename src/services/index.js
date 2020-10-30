@@ -1,20 +1,30 @@
-export const authUser = async (isAdmin, inputs, setAuth, setError) => {
-  try {
-    const response = await fetch(`${`http://localhost:8000/`}auth`, {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(inputs),
-    });
-    const data = await response.json();
+export const fetchHelper = async (url, method, body) => {
+  const response = await fetch(url, {
+    method: method,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  const data = await response.json();
+  return { response, data };
+};
 
+export const authUser = async (isAdmin, inputs, setAuth) => {
+  try {
+    const { response, data } = await fetchHelper(
+      `${`http://localhost:8000/`}auth`,
+      "POST",
+      inputs
+    );
     if (isAdmin && response.status === 200) {
       if (data.isAdmin) {
         setAuth(data);
         localStorage.setItem("admin-user", JSON.stringify(data));
         return data;
+      } else {
+        return { data, ...{ user: true } };
       }
     } else {
       if (response.status === 200) {
@@ -34,18 +44,11 @@ export const authUser = async (isAdmin, inputs, setAuth, setError) => {
 
 export const sendEditData = async (inputs, username) => {
   try {
-    const response = await fetch(
+    const { data } = await fetchHelper(
       `${`http://127.0.0.1:8000/user/edit/${username}`}`,
-      {
-        method: "put",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(inputs),
-      }
+      "put",
+      inputs
     );
-    const data = await response.json();
     console.log(data);
     return data;
   } catch (err) {
@@ -57,37 +60,23 @@ export const sendEditData = async (inputs, username) => {
 
 export const createDataUser = async (inputs) => {
   try {
-    const response = await fetch(`${`http://127.0.0.1:8000/create_user`}`, {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(inputs),
-    });
-    const data = await response.json();
+    const { data } = await fetchHelper(
+      `${`http://127.0.0.1:8000/create_user`}`,
+      "post",
+      inputs
+    );
     return data;
   } catch (err) {
-    let error = await err.response.json();
-    console.log(error);
-    return error;
+    return err;
   }
 };
 
 export const removeUserData = async (username) => {
   try {
-    const response = await fetch(
+    const { data } = await fetchHelper(
       `${`http://127.0.0.1:8000/user/remove/${username}`}`,
-      {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
+      "DELETE"
     );
-    const data = await response.json();
-    console.log(data);
     return data;
   } catch (err) {
     console.log(err);
