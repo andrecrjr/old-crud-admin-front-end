@@ -21,7 +21,7 @@ const Form = ({ edit, data }) => {
     if (Object.keys(userData).length > 0) {
       const newData = getEditData();
       console.log(newData);
-      if (!newData.error) {
+      if (newData) {
         alert("Usuário editado com sucesso!");
         history.push("/admin");
       }
@@ -32,14 +32,18 @@ const Form = ({ edit, data }) => {
 
   const createUser = async (e) => {
     e.preventDefault();
-    console.log(userData);
+
     if (Object.keys(userData).length === 7) {
       const data = await createDataUser(userData);
-      if (Object.keys(data) > 10) {
+
+      if (Object.keys(data).length > 5) {
         alert("Usuário criado com sucesso");
+        history.push("/admin");
       } else {
-        alert(data.info);
+        alert("Problema na criação do usuario tente novamente");
       }
+    } else {
+      alert("Preencha todos os campos!");
     }
   };
 

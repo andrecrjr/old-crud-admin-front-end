@@ -18,6 +18,17 @@ body {
   }
 }
 
+.header {
+  width: 100%;
+  height: 50px;
+  background-color: rgb(44, 117, 212);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 0.8rem;
+  color: white;
+}
+
 @import "admin.scss";
 @import "buttons.scss";
 @import "inputs.scss";

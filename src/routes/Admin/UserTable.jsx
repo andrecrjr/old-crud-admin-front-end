@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import { removeUserData } from "../../services";
 export const UserTable = () => {
   const [users, setUsers] = useState();
-  const [errors, setError] = useState();
+
   const history = useHistory();
   const fetchUsers = async () => {
     try {
       const data = await fetch("http://127.0.0.1:8000/users");
       setUsers(await data.json());
     } catch (error) {
-      setError(error);
+      alert("Problema com API");
     }
   };
   const goToEdit = (e, data) => {
@@ -19,9 +19,18 @@ export const UserTable = () => {
     console.log(data);
     history.push("/admin/edit", data);
   };
-  const removeUser = (e, username) => {
+
+  const removeUser = async (e, username) => {
     e.preventDefault();
-    removeUserData(username);
+    let data = await removeUserData(username);
+    if (data) {
+      alert("Usuário excluido com sucesso!");
+      setUsers((oldValue) =>
+        oldValue.filter((user) => user.username !== username)
+      );
+    } else {
+      alert("Usuário não existe mais!");
+    }
   };
   useEffect(() => {
     fetchUsers();
@@ -29,14 +38,12 @@ export const UserTable = () => {
   return (
     <section className='admin--container'>
       <section className='admin--container__menu'>
-        <button className='button--main blue'>
-          <Link
-            style={{ textDecoration: "none", color: "white" }}
-            to='/admin/create'
-          >
-            Cadastrar usuario
-          </Link>
-        </button>
+        <Link
+          style={{ textDecoration: "none", color: "white" }}
+          to='/admin/create'
+        >
+          <button className='button--main blue'>Cadastrar usuario</button>
+        </Link>
       </section>
       <div className='table--container' style={{ overflowX: "auto" }}>
         <table className='table--users'>
@@ -63,8 +70,18 @@ export const UserTable = () => {
                     <td>{user.telephone}</td>
                     <td>{user.cpf}</td>
                     <td>{user.isAdmin ? `Sim` : `Não`}</td>
-                    <td onClick={(e) => goToEdit(e, { ...user })}>✏</td>
-                    <td onClick={(e) => removeUser(e, user.username)}>✖</td>
+                    <td
+                      style={{ cursor: "pointer" }}
+                      onClick={(e) => goToEdit(e, { ...user })}
+                    >
+                      ✏
+                    </td>
+                    <td
+                      style={{ cursor: "pointer" }}
+                      onClick={(e) => removeUser(e, user.username)}
+                    >
+                      ✖
+                    </td>
                   </tr>
                 </>
               ))}

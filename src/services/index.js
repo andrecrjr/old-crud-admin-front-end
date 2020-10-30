@@ -38,7 +38,7 @@ export const sendEditData = async (inputs, username) => {
     const data = await response.json();
     console.log(data);
     return data;
-  } catch (error) {
+  } catch (err) {
     let error = await err.response.json();
     console.log("Problema na comunicação com a API!");
     return error;
@@ -67,21 +67,20 @@ export const createDataUser = async (inputs) => {
 export const removeUserData = async (username) => {
   try {
     const response = await fetch(
-      `${`http://127.0.0.1:8000/user/delete/${username}`}`,
+      `${`http://127.0.0.1:8000/user/remove/${username}`}`,
       {
         method: "DELETE",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(inputs),
       }
     );
     const data = await response.json();
+    console.log(data);
     return data;
   } catch (err) {
-    let error = await err.response.json();
-
-    return error;
+    console.log(err);
+    return err;
   }
 };
