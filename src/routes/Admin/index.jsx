@@ -58,7 +58,7 @@ const Admin = () => {
             </form>
           </section>
         )}
-        {userAuth && <UserTable />}
+        {userAuth && userAuth.isAdmin && <UserTable />}
       </section>
     </Layout>
   );

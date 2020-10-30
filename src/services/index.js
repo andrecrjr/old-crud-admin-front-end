@@ -1,14 +1,18 @@
 export const fetchHelper = async (url, method, body) => {
-  const response = await fetch(url, {
-    method: method,
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
-  const data = await response.json();
-  return { response, data };
+  try {
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    const data = await response.json();
+    return { response, data };
+  } catch (error) {
+    return error;
+  }
 };
 
 export const authUser = async (isAdmin, inputs, setAuth) => {
@@ -49,12 +53,10 @@ export const sendEditData = async (inputs, username) => {
       "put",
       inputs
     );
-    console.log(data);
+
     return data;
   } catch (err) {
-    let error = await err.response.json();
-    console.log("Problema na comunicação com a API!");
-    return error;
+    return err;
   }
 };
 
@@ -79,7 +81,6 @@ export const removeUserData = async (username) => {
     );
     return data;
   } catch (err) {
-    console.log(err);
     return err;
   }
 };

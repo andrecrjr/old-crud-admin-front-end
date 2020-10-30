@@ -1,0 +1,19 @@
+.user__dashboard {
+  margin-top: 50px;
+  > section {
+    display: flex;
+    justify-content: center;
+  }
+  section {
+    margin-top: 15px;
+  }
+  .dashboard {
+    &__label {
+      font-weight: 700;
+    }
+    &__info {
+      font-size: 0.7rem;
+      margin-left: 25px;
+    }
+  }
+}

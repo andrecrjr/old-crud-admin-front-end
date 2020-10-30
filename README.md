@@ -20,13 +20,19 @@
 
 ---
 
-### `Passo 5: http://localhost:3000/admin para acessar como admin e http://localhost:3000/ para acessar como usuário comum.`
+### `Objetivo 1: http://localhost:3000/admin CRUD com o admin`
 
 ---
 
-O sistema foi escrito em ReactJS, tentando usufrui de React Hooks e React router dom para trajetos entre telas, utilização do Fetch API(nativo) do EcmaScript para requisições assincronas.
+### `Objetivo 2: http://localhost:3000/ autenticação básica com o usuário`
+
+---
+
+O sistema foi escrito em React, tentando usufruir do React Hooks e React router dom para trajetos entre telas, utilização do Fetch API(nativo) do EcmaScript para requisições assincronas, autenticação básica apenas verificando se os dados estão no local storage.
 
 Para testar tanto o admin, como o usuário, poderá utilizar a credencial:
 
 - username: admin
 - password: 123456
+
+---
