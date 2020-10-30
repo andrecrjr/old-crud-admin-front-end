@@ -12,7 +12,7 @@
 
 ---
 
-### `Passo 3: Após todo os pacotes do node_modules instalado, rodar o react com yarn start no terminal`
+### `Passo 3: Após todo os pacotes do node_modules instalado, rodar o react com yarn start na raiz do projeto pelo terminal`
 
 ---
 
