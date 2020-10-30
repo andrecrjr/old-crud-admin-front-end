@@ -123,7 +123,7 @@ const Form = ({ edit, data }) => {
           <input
             type='text'
             placeholder={!edit ? "Digite seu telefone" : data.telephone}
-            maxLength='9'
+            maxLength='10'
             onChange={(e) =>
               setUserData((oldData) => ({
                 ...oldData,

@@ -45,6 +45,13 @@ const UserInformations = () => {
             <span></span>
             <section className='dashboard__info'>{user.cpf}</section>
           </section>
+          <section>
+            <section className='dashboard__label'>É admin? :</section>
+            <span></span>
+            <section className='dashboard__info'>
+              {user.isAdmin ? "sim" : "não"}
+            </section>
+          </section>
         </section>
       )}
     </>

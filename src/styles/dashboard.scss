@@ -5,7 +5,9 @@
     justify-content: center;
   }
   section {
-    margin-top: 15px;
+    max-width: 620px;
+    margin: 0 auto;
+    margin-top: 10px;
   }
   .dashboard {
     &__label {
