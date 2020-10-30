@@ -1,6 +1,15 @@
 import React from "react";
 
-const Layout = ({ children }) => {
+const Layout = ({ isAuth, children }) => {
+  const [data, setData] = React.useState(
+    localStorage.getItem("admin-user") || null
+  );
+
+  React.useEffect(() => {
+    setData(isAuth.auth || false);
+    console.log(data);
+  }, [isAuth]);
+
   const logout = (e) => {
     e.preventDefault();
     if (localStorage.getItem("admin-user")) {
@@ -12,9 +21,7 @@ const Layout = ({ children }) => {
     <>
       <header className='header'>
         <div>Administração CRUD Mongo</div>
-        {localStorage.getItem("admin-user") && (
-          <div onClick={logout}>Logout</div>
-        )}
+        {data && <div onClick={logout}>Logout</div>}
       </header>
       <section>{children}</section>
     </>

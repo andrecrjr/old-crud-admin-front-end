@@ -1,4 +1,4 @@
-export const authUser = async (inputs, setAuth, setError) => {
+export const authUser = async (isAdmin, inputs, setAuth, setError) => {
   try {
     const response = await fetch(`${`http://localhost:8000/`}auth`, {
       method: "post",
@@ -9,16 +9,26 @@ export const authUser = async (inputs, setAuth, setError) => {
       body: JSON.stringify(inputs),
     });
     const data = await response.json();
-    if (data.isAdmin) {
-      setAuth(data);
-      localStorage.setItem("admin-user", JSON.stringify(data));
+
+    if (isAdmin && response.status === 200) {
+      if (data.isAdmin) {
+        setAuth(data);
+        localStorage.setItem("admin-user", JSON.stringify(data));
+        return data;
+      }
     } else {
-      setError({ error: true, info: "Você não é admin" });
-      alert("Você não é admin");
+      if (response.status === 200) {
+        setAuth(data);
+        localStorage.setItem("admin-user", JSON.stringify(data));
+        return { ...data, status: true };
+      }
+    }
+    if (response.status !== 200) {
+      alert(data.info);
     }
   } catch (error) {
-    console.log(error);
     alert("Servidor está fora do ar, tente novamente!");
+    return error;
   }
 };
 

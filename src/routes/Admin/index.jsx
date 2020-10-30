@@ -3,9 +3,8 @@ import { UserTable } from "./UserTable";
 import { authUser } from "../../services";
 import Layout from "../../components/Container";
 
-const Admin = (props) => {
+const Admin = () => {
   const [inputs, setInput] = useState({ username: "", password: "" });
-  const [, setError] = useState({});
   const [userAuth, setAuth] = useState(
     JSON.parse(localStorage.getItem("admin-user")) || false
   );
@@ -13,11 +12,11 @@ const Admin = (props) => {
   const _sendAuth = (e) => {
     e.preventDefault();
     console.log();
-    authUser(inputs, setAuth, setError);
+    authUser(true, inputs, setAuth);
   };
 
   return (
-    <Layout>
+    <Layout isAuth={userAuth}>
       <section className={`container${!userAuth ? `--auth` : ""}`}>
         {!userAuth && (
           <section className='admin--login'>
