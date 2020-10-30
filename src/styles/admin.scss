@@ -1,0 +1,65 @@
+.admin {
+  &--login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 320px;
+    height: 100vh;
+    h1 {
+      margin: 0;
+      margin-bottom: 10px;
+    }
+    &__form {
+    }
+  }
+  &--container {
+    display: block;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 0 25px;
+    margin-top: 55px;
+    overflow: hidden;
+
+    &__menu {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+      button {
+        margin: 0;
+      }
+    }
+    table thead td {
+      font-size: 0.7rem;
+      text-align: center;
+      border-bottom: 1px solid black;
+      padding: 10px 10px;
+      background: lightblue;
+    }
+    table tbody td {
+      text-align: center;
+      font-size: 0.7rem;
+      padding: 5px;
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .admin {
+    &--container {
+      &__menu {
+      }
+    }
+  }
+
+  .table {
+    &--container {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      margin: 0 auto;
+      margin-top: 20px;
+    }
+  }
+}

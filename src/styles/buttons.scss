@@ -1,0 +1,17 @@
+.button {
+  &--main {
+    width: auto;
+    height: auto;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-image: linear-gradient(to bottom, #76b852 0%, #76b852 100%);
+    margin: 0 auto;
+    color: white;
+    font-weight: bold;
+    margin-top: 15px;
+    &.blue {
+      background-image: linear-gradient(to bottom, #1269af 0%, #3683ca 100%);
+    }
+  }
+}

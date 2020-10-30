@@ -1,0 +1,22 @@
+input:not([type="checkbox"]) {
+  width: 80%;
+  height: 25px;
+  padding: 5px 0 5px 15px;
+  margin-top: 15px;
+}
+
+fieldset {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  label {
+    padding-top: 10px;
+    margin-right: 10px;
+    font-size: 0.8rem;
+  }
+  input {
+    max-width: 40%;
+    height: 15px;
+  }
+}
