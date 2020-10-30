@@ -8,7 +8,7 @@
 
 ---
 
-### `Passo 2: yarn install ou npm install, pelo terminal na raiz do projeto`
+### `Passo 2: Rodar o comando yarn install ou npm install, pelo terminal na raiz do projeto`
 
 ---
 

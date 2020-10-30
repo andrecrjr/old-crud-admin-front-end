@@ -3,13 +3,13 @@ import { useHistory } from "react-router";
 
 const Layout = ({ isAuth, children }) => {
   const [data, setData] = React.useState(
-    localStorage.getItem("admin-user") || null
+    JSON.parse(localStorage.getItem("admin-user")) || null
   );
 
   const history = useHistory();
 
   React.useEffect(() => {
-    if (isAuth) setData(isAuth.auth || false);
+    if (isAuth) setData(isAuth || false);
   }, [isAuth]);
 
   React.useEffect(() => {
@@ -33,7 +33,16 @@ const Layout = ({ isAuth, children }) => {
         ) : (
           <p>Autenticação do Usuário</p>
         )}
-        {data && <div onClick={logout}>Logout</div>}
+        {data && data.auth && (
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div style={{ paddingRight: "25px", fontWeight: "bold" }}>
+              {data.username}
+            </div>{" "}
+            <span onClick={logout} style={{ cursor: "pointer" }}>
+              Logout ↩
+            </span>
+          </div>
+        )}
       </header>
       <section>{children}</section>
     </>

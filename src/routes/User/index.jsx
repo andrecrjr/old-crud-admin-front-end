@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import Layout from "../../components/Container";
 import { authUser } from "../../services";
-import { useLocation } from "react-router";
+import UserInformations from "./UserInformations";
 const UserLogin = () => {
   const [inputs, setInputs] = useState({ username: "", password: "" });
-  const [auth, setAuth] = useState({});
+  const [userAuth, setAuth] = useState(
+    JSON.parse(localStorage.getItem("admin-user")) || null
+  );
 
   const sendAuthUser = async (e) => {
     e.preventDefault();
     await authUser(false, inputs, setAuth);
   };
   return (
-    <Layout isAuth={auth}>
-      {!auth.auth ? (
+    <Layout isAuth={userAuth}>
+      {!userAuth && (
         <section
           className='container'
           style={{
@@ -52,9 +54,8 @@ const UserLogin = () => {
             </form>
           </section>
         </section>
-      ) : (
-        <UserInformations />
       )}
+      {userAuth && <UserInformations />}
     </Layout>
   );
 };

@@ -16,10 +16,12 @@ const Admin = () => {
     console.log();
     const data = authUser(true, inputs, setAuth);
     const response = await data;
-    if (response.user) {
-      history.push("/");
+    if (response) {
+      if (response.user) history.push("/");
     }
   };
+
+  console.log(userAuth);
 
   return (
     <Layout isAuth={userAuth}>
